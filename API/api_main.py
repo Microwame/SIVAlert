@@ -1,9 +1,9 @@
-from fastapi import FastAPI, HTTPException, Request, UploadFile, File
+from fastapi import FastAPI, HTTPException, Request, Response, UploadFile, File
 
 app = FastAPI()
 
 @app.post("/image-upload")
-def file_upload(file: UploadFile = File(...)):
+async def file_upload(file: UploadFile = File(...)):
     if Request.method != "POST":  # Verifica se o método da requisição é POST
         raise HTTPException(
             status_code=405,
@@ -26,4 +26,24 @@ def file_upload(file: UploadFile = File(...)):
         )
     # Ollama aqui
     del file
-    return {"message": "File uploaded successfully."}
+    return Response(content={"message": "File uploaded successfully."}, media_type="application/json")
+
+@app.get("/ping")
+async def ping():
+    return {"status": "online"}
+
+@app.get("/dashboard")
+async def webpage():
+    with open("index.html", "r") as f:
+        content = f.read()
+    return Response(content=content, media_type="text/html")
+
+@app.get("/")
+async def redirect_to_dashboard():
+    return Response(status_code=301, headers={"Location": "/dashboard"})
+
+@app.get("/api-docs")
+async def api_docs():
+    with open("api-docs.html", "r") as f:
+        content = f.read()
+    return Response(content=content, media_type="text/html")
