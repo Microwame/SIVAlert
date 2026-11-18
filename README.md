@@ -21,3 +21,6 @@ $ pip install -r requirements.txt
 $ cd API
 $ .\start.py
 ```
+O servidor irá iniciar na porta padrão de http (80)  
+Para ir ao painel vá a http://127.0.0.1/dashboard  
+Documentação estará em http://127.0.0.1/docs
