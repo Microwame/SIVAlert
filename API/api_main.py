@@ -42,8 +42,8 @@ async def webpage():
 async def redirect_to_dashboard():
     return Response(status_code=301, headers={"Location": "/dashboard"})
 
-@app.get("/api-docs")
+@app.get("/docs")
 async def api_docs():
-    with open("api-docs.html", "r") as f:
+    with open("docs.html", "r") as f:
         content = f.read()
     return Response(content=content, media_type="text/html")
